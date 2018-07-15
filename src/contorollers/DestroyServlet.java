@@ -13,16 +13,16 @@ import models.Task;
 import utils.DBUtil;
 
 /**
- * Servlet implementation class DestoryServlet
+ * Servlet implementation class DestroyServlet
  */
-@WebServlet("/destory")
-public class DestoryServlet extends HttpServlet {
+@WebServlet("/destroy")
+public class DestroyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DestoryServlet() {
+    public DestroyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,11 +43,10 @@ public class DestoryServlet extends HttpServlet {
             em.getTransaction().commit();
             em.close();
 
-            request.getSession().removeAttribute("task_id");
+            request.getSession().removeAttribute("message_id");
 
             response.sendRedirect(request.getContextPath() + "/index");
         }
     }
-	}
 
 }
