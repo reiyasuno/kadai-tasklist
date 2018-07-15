@@ -43,8 +43,10 @@ public class CreateServlet extends HttpServlet {
 	        t.setTitle(title);
 
 	        String content = request.getParameter("content");
+	        t.setContent(content);
 
 	        String other = request.getParameter("other");
+	        t.setOther(other);
 
 	        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 	        t.setCreated_at(currentTime);
