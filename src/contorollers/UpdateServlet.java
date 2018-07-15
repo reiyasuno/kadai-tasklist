@@ -1,11 +1,17 @@
 package contorollers;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+
+import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import models.Task;
+import utils.DBUtil;
 
 /**
  * Servlet implementation class UpdateServlet
@@ -13,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/update")
 public class UpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -27,6 +33,32 @@ public class UpdateServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	}
+	    String _token = (String)request.getParameter("_token");
+        if(_token != null && _token.equals(request.getSession().getId())) {
+            EntityManager em = DBUtil.createEntityManager();
+
+            Task t = em.find(Task.class, (Integer)(request.getSession().getAttribute("task_id")));
+
+            String title = request.getParameter("title");
+            t.setTitle(title);
+
+            String content = request.getParameter("content");
+            t.setContent(content);
+
+            String other = request.getParameter("other");
+            t.setOther(other);
+
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            t.setUpdated_at(currentTime);
+
+            em.getTransaction().begin();
+            em.getTransaction().commit();
+            em.close();
+
+            request.getSession().removeAttribute("task_id");
+
+            response.sendRedirect(request.getContextPath() + "/index");
+        }
+    }
 
 }
