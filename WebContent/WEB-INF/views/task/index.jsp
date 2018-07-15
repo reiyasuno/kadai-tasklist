@@ -2,6 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:import url="../layout/app.jsp">
     <c:param name="content">
+    <c:if test="${flush !=null}">
+        <div id="flush_success"></div>
+            <c:out value="${flush }"></c:out>
+        </c:if>
         <h2>タスク一覧</h2>
         <ul>
             <c:forEach var="task" items="${task}">
