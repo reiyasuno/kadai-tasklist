@@ -70,7 +70,7 @@ public class CreateServlet extends HttpServlet {
 	        em.getTransaction().begin();
 	        em.persist(t);
 	        em.getTransaction().commit();
-	        request.getSession().setAttribute("flush", "追加が完了しました。");
+	        request.getSession().setAttribute("flush", "投稿が完了しました。");
 	        em.close();
 
 	        response.sendRedirect(request.getContextPath() + "/index");
